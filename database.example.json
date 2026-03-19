@@ -1,0 +1,18 @@
+{
+  "users": [
+    {
+      "username": "AdminUsername",
+      "password": "strongpassword123",
+      "role": "staff manager",
+      "status": "approved"
+    }
+  ],
+  "logs": [],
+  "announcements": [],
+  "robloxStats": {
+    "playerCount": 0,
+    "activeStaff": 0,
+    "activeReports": 0
+  },
+  "reports": []
+}

@@ -180,6 +180,19 @@ app.post('/api/roblox/report', (req, res) => {
     saveDb(db);
     res.json({success: true});
 });
+
+app.get('/api/player/:username', (req, res) => {
+    const target = req.params.username.toLowerCase();
+    let db = getDb(); db = ensureStructure(db);
+    
+    const history = db.logs.filter(l => l.target.toLowerCase() === target && l.action !== 'resolve_report');
+    res.json({
+        username: req.params.username,
+        infractions: history.length,
+        history: history
+    });
+});
+
 app.post('/api/roblox/sync', (req, res) => {
     const { playerCount, activeStaff, apiKey } = req.body;
     if(apiKey !== "ROBLOX_SECRET_KEY") return res.status(403).json({error: "Invalid Key"});
