@@ -153,6 +153,9 @@
                         <p class="subtitle">Complete history of staff interventions</p>
                     </div>
                 </header>
+                <div class="search-bar">
+                    <input type="text" id="log-search-input" placeholder="Live filter logs by staff, target, or action..." onkeyup="filterLogs()">
+                </div>
                 <div class="tool-card glass-panel">
                     <div class="card-body p-0">
                         <div class="table-responsive">
@@ -313,21 +316,18 @@
                         <i class="fa-solid fa-user"></i>
                     </div>
                     <div>
-                        <h2 id="lookup-name" style="font-size: 1.8rem;">PlayerName</h2>
-                        <p class="text-muted">ID: <span id="lookup-id">129481924</span></p>
-                        <p style="color: var(--warning); font-size: 0.85rem; margin-top: 0.25rem;"><i class="fa-solid fa-triangle-exclamation"></i> 2 Prior Warnings</p>
+                        <h2 id="lookup-name" style="font-size: 1.8rem; text-transform: lowercase;">PlayerName</h2>
+                        <p style="color: var(--warning); font-size: 0.95rem; margin-top: 0.25rem; font-weight: 600;" id="lookup-infractions"><i class="fa-solid fa-triangle-exclamation"></i> 0 Recorded Infractions</p>
                     </div>
                 </div>
-                <div class="dashboard-grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
-                    <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
-                        <h4 style="margin-bottom: 0.5rem; color: var(--text-secondary); font-size: 0.85rem;">ECONOMY BALANCE</h4>
-                        <p style="font-size: 1.25rem; font-weight: 600; color: var(--accent-gold);"><i class="fa-solid fa-coins"></i> 4,520</p>
-                    </div>
-                    <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
-                        <h4 style="margin-bottom: 0.5rem; color: var(--text-secondary); font-size: 0.85rem;">CURRENT STATUS</h4>
-                        <p style="font-size: 1.25rem; font-weight: 600; color: var(--success);">In Game (Server #4)</p>
+                
+                <h4 style="margin-bottom: 0.75rem; color: var(--text-secondary); font-size: 0.85rem;">MODERATION HISTORY</h4>
+                <div style="background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px solid var(--glass-border); max-height: 250px; overflow-y: auto;">
+                    <div id="lookup-history" style="padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                        <!-- Injected via JS -->
                     </div>
                 </div>
+                
                 <button class="btn btn-outline w-100 mt-3" onclick="document.getElementById('profile-modal').style.display='none'">Close Dossier</button>
             </div>
         </div>

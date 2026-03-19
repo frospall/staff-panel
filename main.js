@@ -145,12 +145,37 @@ async function fetchStats() {
         if(rs) rs.textContent = data.activeReports;
     } catch(e) {}
 }
-document.getElementById('btn-lookup').addEventListener('click', () => {
+document.getElementById('btn-lookup').addEventListener('click', async () => {
     const input = document.getElementById('lookup-input').value;
+    const btn = document.getElementById('btn-lookup');
     if(!input) return;
-    document.getElementById('lookup-name').textContent = input;
-    document.getElementById('lookup-id').textContent = Math.floor(Math.random() * 999999999);
-    document.getElementById('profile-modal').style.display = 'flex';
+    
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+    try {
+        const res = await fetch('/api/player/' + input);
+        const data = await res.json();
+        
+        document.getElementById('lookup-name').textContent = data.username;
+        const countTxt = data.infractions === 1 ? '1 Recorded Infraction' : `${data.infractions} Recorded Infractions`;
+        document.getElementById('lookup-infractions').innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${countTxt}`;
+        
+        const histDiv = document.getElementById('lookup-history');
+        if (data.history.length === 0) {
+            histDiv.innerHTML = '<p class="text-muted text-center" style="padding:1rem;">Clean record. No punishments found.</p>';
+        } else {
+            histDiv.innerHTML = data.history.map(h => {
+                const d = new Date(h.timestamp).toLocaleDateString();
+                const act = `<span class="badge" style="background:var(--glass-border);color:white;font-size:0.7rem;padding:0.15rem 0.4rem;">${h.action.toUpperCase()}</span>`;
+                return `<div style="display:flex; flex-direction:column; gap:0.25rem; padding-bottom:0.75rem; border-bottom:1px solid var(--glass-border);">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">${act} <span style="font-size:0.8rem; color:var(--text-muted);">${d}</span></div>
+                            <span style="font-size:0.9rem;"><strong>Staff:</strong> ${h.staff}</span>
+                            <span style="font-size:0.9rem; color:var(--text-secondary);">"${h.reason}" ${h.meta ? '('+h.meta+')' : ''}</span>
+                        </div>`;
+            }).join('');
+        }
+        document.getElementById('profile-modal').style.display = 'flex';
+    } catch(e) { alert("Failed to fetch player database."); }
+    btn.innerHTML = '<i class="fa-solid fa-search"></i> Inspect';
 });
 window.loadReports = async function() {
     const tb = document.getElementById('reports-feed');
@@ -282,13 +307,23 @@ async function loadLogs() {
         if(logs.length === 0) return tb.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No logs recorded yet.</td></tr>';
         logs.forEach(l => {
             const tr = document.createElement('tr');
+            tr.className = 'log-row';
             const d = new Date(l.timestamp).toLocaleString();
             let actionHtml = `<span class="badge" style="background:var(--glass-border);color:white">${l.action.toUpperCase()}</span>`;
             if(l.action === 'resolve_report') actionHtml = `<span class="badge" style="background:var(--success);color:white">REPORT RESOLVED</span>`;
-            tr.innerHTML = `<td>${d}</td><td><span style="color:var(--accent-cyan)">${l.staff}</span></td><td>${actionHtml}</td><td><strong>${l.target}</strong></td><td>${l.reason} <span class="text-muted" style="font-size:0.8rem">${l.meta?'('+l.meta+')':''}</span></td>`;
+            tr.innerHTML = `<td>${d}</td><td class="log-staff"><span style="color:var(--accent-cyan)">${l.staff}</span></td><td class="log-action">${actionHtml}</td><td class="log-target"><strong>${l.target}</strong></td><td>${l.reason} <span class="text-muted" style="font-size:0.8rem">${l.meta?'('+l.meta+')':''}</span></td>`;
             tb.appendChild(tr);
         });
     } catch(e) {}
+}
+
+window.filterLogs = function() {
+    const filter = document.getElementById('log-search-input').value.toLowerCase();
+    const rows = document.querySelectorAll('#logs-tb .log-row');
+    rows.forEach(r => {
+        const text = r.textContent.toLowerCase();
+        r.style.display = text.includes(filter) ? '' : 'none';
+    });
 }
 async function loadAnnouncements() {
     const feed = document.getElementById('announcements-feed');
