@@ -1,0 +1,96 @@
+{
+  "users": [
+    {
+      "username": "Frospall",
+      "password": "vip",
+      "role": "staff manager",
+      "status": "approved"
+    },
+    {
+      "username": "Test1",
+      "password": "1234",
+      "role": "staff manager",
+      "status": "approved"
+    },
+    {
+      "username": "katilulas1",
+      "password": "test",
+      "role": "management",
+      "status": "approved"
+    }
+  ],
+  "logs": [
+    {
+      "id": 1773936647090,
+      "staff": "Frospall",
+      "action": "give",
+      "target": "katilulas",
+      "reason": "Good boy",
+      "timestamp": 1773936647090,
+      "meta": "10000"
+    },
+    {
+      "id": 1773936633456,
+      "staff": "Frospall",
+      "action": "mute",
+      "target": "test23",
+      "reason": "test",
+      "timestamp": 1773936633456,
+      "meta": "3"
+    },
+    {
+      "id": 1773934724484,
+      "staff": "Frospall",
+      "action": "ban",
+      "target": "test",
+      "reason": "test",
+      "timestamp": 1773934724484,
+      "meta": "3"
+    },
+    {
+      "id": 1773934593295,
+      "staff": "Frospall",
+      "action": "kick",
+      "target": "test",
+      "reason": "test",
+      "timestamp": 1773934593295,
+      "meta": "24"
+    }
+  ],
+  "announcements": [
+    {
+      "id": 1773936668938,
+      "author": "Frospall",
+      "title": "Hello, My name is frospall!",
+      "content": "Test",
+      "timestamp": 1773936668938
+    },
+    {
+      "id": 1773934737071,
+      "author": "Frospall",
+      "title": "Hi there!",
+      "content": "test",
+      "timestamp": 1773934737071
+    },
+    {
+      "id": 1773933905138,
+      "author": "Frospall",
+      "title": "Test",
+      "content": "TEst1",
+      "timestamp": 1773933905138
+    },
+    {
+      "id": 1,
+      "author": "System",
+      "title": "Welcome to the New Panel",
+      "content": "The staff panel has been upgraded to Version 2.0. Please utilize the new Action logs and remember to check Discord for meetings.",
+      "timestamp": 1699999999999
+    }
+  ],
+  "robloxStats": {
+    "playerCount": 4281,
+    "activeStaff": 12,
+    "activeReports": 5
+  },
+  "reports": []
+}

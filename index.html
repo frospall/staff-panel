@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Panel - Professional Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="vfx-bg"></div>
+    <div id="auth-container" class="auth-wrapper">
+        <div class="auth-box glass-panel fade-in">
+            <div class="auth-header">
+                <div class="logo-icon large"><i class="fa-solid fa-server"></i></div>
+                <h2>Staff<span class="gradient-text">Panel</span></h2>
+                <p class="auth-subtitle">Professional Administration Network</p>
+            </div>
+            <div id="auth-message" class="auth-message" style="display: none;"></div>
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-auth="login">Login</button>
+                <button class="auth-tab" data-auth="signup">Apply (Sign Up)</button>
+            </div>
+            <form id="auth-form" class="auth-form">
+                <div class="input-group">
+                    <label><i class="fa-solid fa-user"></i> Roblox Username</label>
+                    <input type="text" id="auth-username" required placeholder="Enter exact username">
+                </div>
+                <div class="input-group">
+                    <label><i class="fa-solid fa-lock"></i> Password</label>
+                    <input type="password" id="auth-password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn-primary w-100 mt-3" id="auth-submit-btn">Login to Panel</button>
+            </form>
+        </div>
+    </div>
+    <div class="app-container" id="app-container" style="display: none;">
+        <nav class="sidebar glass-panel">
+            <div class="sidebar-header">
+                <div class="logo-icon"><i class="fa-solid fa-server"></i></div>
+                <h2 class="logo-text">Staff<span class="gradient-text">Panel</span></h2>
+            </div>
+            <div class="nav-links section-divider">
+                <p class="sidebar-section-title">MAIN</p>
+                <button class="nav-btn active" data-target="staff-panel">
+                    <i class="fa-solid fa-users-gear"></i> Action Center
+                </button>
+                <button class="nav-btn" data-target="live-reports">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Live Reports
+                </button>
+                <button class="nav-btn" data-target="mod-logs">
+                    <i class="fa-solid fa-clipboard-list"></i> Audit Logs
+                </button>
+                <button class="nav-btn" data-target="announcements">
+                    <i class="fa-solid fa-bullhorn"></i> Announcements
+                </button>
+            </div>
+            <div class="nav-links section-divider" style="margin-top: 1rem;">
+                <p class="sidebar-section-title">MANAGEMENT</p>
+                <button class="nav-btn" data-target="admin-panel" id="nav-admin" style="display: none;">
+                    <i class="fa-solid fa-crown"></i> Admin Dashboard
+                </button>
+                <button class="nav-btn" data-target="about-me">
+                    <i class="fa-solid fa-address-card"></i> Dev Profile
+                </button>
+            </div>
+            <div class="user-profile">
+                <div class="avatar"><i class="fa-solid fa-user-shield"></i></div>
+                <div class="user-info">
+                    <span class="name" id="profile-name">Loading...</span>
+                    <span class="role" id="profile-role">Moderator</span>
+                </div>
+                <button id="logout-btn" class="logout-btn" title="Logout"><i class="fa-solid fa-right-from-bracket"></i></button>
+            </div>
+        </nav>
+        <main class="main-content">
+            <section id="staff-panel" class="page active fade-in">
+                <header class="page-header">
+                    <div>
+                        <h1>Action <span class="gradient-text">Center</span></h1>
+                        <p class="subtitle">Live game management & moderation tools</p>
+                    </div>
+                </header>
+                <div class="dashboard-grid">
+                    <div class="stat-card glass-panel flex-row">
+                        <div class="stat-icon purple-glow"><i class="fa-solid fa-user-shield"></i></div>
+                        <div class="stat-details">
+                            <h3>Active Staff</h3>
+                            <span class="number" id="stat-staff">--</span>
+                        </div>
+                    </div>
+                    <div class="stat-card glass-panel flex-row">
+                        <div class="stat-icon blue-glow"><i class="fa-solid fa-gamepad"></i></div>
+                        <div class="stat-details">
+                            <h3>Players Online</h3>
+                            <span class="number" id="stat-players">--</span>
+                        </div>
+                    </div>
+                    <div class="stat-card glass-panel flex-row">
+                        <div class="stat-icon red-glow"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                        <div class="stat-details">
+                            <h3>Active Reports</h3>
+                            <span class="number" id="stat-reports">--</span>
+                        </div>
+                    </div>
+                    <div class="tool-card glass-panel col-span-2">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-magnifying-glass"></i> Deep Player Lookup</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="search-bar">
+                                <input type="text" id="lookup-input" placeholder="Enter Roblox Username or ID...">
+                                <button class="btn btn-primary" id="btn-lookup"><i class="fa-solid fa-search"></i> Inspect</button>
+                            </div>
+                            <p class="text-muted" style="font-size: 0.85rem;">Inspection pulls full inventory, chat logs, and past punishments from the Roblox game engine in real-time.</p>
+                        </div>
+                    </div>
+                    <div class="tool-card glass-panel col-span-3">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-bolt"></i> Enforcement Pipeline</h3>
+                        </div>
+                        <div class="card-body action-buttons" style="grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 1rem;">
+                            <button class="btn btn-danger" id="btn-ban" onclick="openModal('ban')"><i class="fa-solid fa-gavel"></i> Ban</button>
+                            <button class="btn btn-warning" id="btn-unban" onclick="openModal('unban')"><i class="fa-solid fa-unlock"></i> Unban</button>
+                            <button class="btn btn-info" id="btn-kick" onclick="openModal('kick')"><i class="fa-solid fa-user-slash"></i> Kick</button>
+                            <button class="btn btn-secondary" id="btn-mute" onclick="openModal('mute')"><i class="fa-solid fa-comment-slash"></i> Mute</button>
+                            <button class="btn btn-outline" id="btn-warn" onclick="openModal('warn')"><i class="fa-solid fa-triangle-exclamation"></i> Warn</button>
+                            <button class="btn btn-outline" id="btn-jail" onclick="openModal('jail')"><i class="fa-solid fa-bars"></i> Jail</button>
+                            <button class="btn btn-outline" id="btn-give" onclick="openModal('give')"><i class="fa-solid fa-coins"></i> Economy</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="live-reports" class="page fade-in">
+                <header class="page-header">
+                    <div>
+                        <h1>Live <span class="gradient-text">Reports</span></h1>
+                        <p class="subtitle">Incoming player reports from the game server</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="loadReports()"><i class="fa-solid fa-arrows-rotate"></i> Refresh Queue</button>
+                </header>
+                <div class="dashboard-grid" id="reports-feed">
+                    <p class="text-muted col-span-3 text-center">Loading live reports...</p>
+                </div>
+            </section>
+            <section id="mod-logs" class="page fade-in">
+                <header class="page-header">
+                    <div>
+                        <h1>Audit <span class="gradient-text">Logs</span></h1>
+                        <p class="subtitle">Complete history of staff interventions</p>
+                    </div>
+                </header>
+                <div class="tool-card glass-panel">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Timestamp</th>
+                                        <th>Staff Member</th>
+                                        <th>Action</th>
+                                        <th>Target</th>
+                                        <th>Reason / Meta</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="logs-tb">
+                                    <tr><td colspan="5" class="text-center">Loading logs...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="announcements" class="page fade-in">
+                <header class="page-header">
+                    <div>
+                        <h1>Staff <span class="gradient-text">Announcements</span></h1>
+                        <p class="subtitle">Internal communication and updates</p>
+                    </div>
+                </header>
+                <div class="dashboard-grid">
+                    <div class="col-span-2" id="announcements-feed" style="display: flex; flex-direction: column; gap: 1rem;">
+                    </div>
+                    <div class="tool-card glass-panel" id="post-announcement-card" style="display: none; height: fit-content;">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-pen"></i> Broadcast</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="input-group">
+                                <label>Title</label>
+                                <input type="text" id="announce-title" placeholder="Meeting at 5PM EST">
+                            </div>
+                            <div class="input-group">
+                                <label>Message</label>
+                                <textarea id="announce-content" rows="4" style="width:100%; background:rgba(0,0,0,0.3); border:1px solid var(--glass-border); color:var(--text-primary); padding:0.75rem; border-radius:var(--border-radius-sm); outline:none; font-family:inherit; resize:vertical;"></textarea>
+                            </div>
+                            <button class="btn btn-primary w-100" id="btn-post-announce">Post to Board</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="admin-panel" class="page fade-in">
+                <header class="page-header">
+                    <div>
+                        <h1>Admin <span class="gradient-text">Dashboard</span></h1>
+                        <p class="subtitle">System Hierarchy & Application Management</p>
+                    </div>
+                </header>
+                <div class="dashboard-grid">
+                    <div class="tool-card glass-panel col-span-2" style="height: fit-content;">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-users"></i> All Active Staff</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="admin-table">
+                                    <thead><tr><th>Username</th><th>Current Rank</th><th>Manage</th></tr></thead>
+                                    <tbody id="active-staff-tb"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tool-card glass-panel" style="height: fit-content;">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-user-clock"></i> Applications</h3>
+                        </div>
+                        <div class="card-body" style="padding: 1rem;">
+                            <div class="pending-list" id="pending-users-tb"></div>
+                            <div id="no-pending-msg" style="text-align:center; padding: 1rem; color: var(--text-muted); font-size: 0.9rem;">
+                                No applications pending.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="about-me" class="page fade-in">
+                <header class="page-header"><div><h1>Dev <span class="gradient-text">Profile</span></h1></div></header>
+                <div class="profile-container glass-panel">
+                    <div class="profile-header flex-row">
+                        <div class="large-avatar glow"><i class="fa-solid fa-user-astronaut"></i></div>
+                        <div class="profile-text">
+                            <h2>Frospall</h2><p class="age-info">22 Years Old</p>
+                            <div class="badges">
+                                <span class="badge badge-manager">Staff Manager</span>
+                                <span class="badge badge-dev">Senior Developer</span>
+                            </div>
+                        </div>
+                        <div class="profile-link">
+                            <a href="https://frospall.info" target="_blank" class="btn btn-outline"><i class="fa-solid fa-globe"></i> frospall.info</a>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="profile-body">
+                        <h3><i class="fa-solid fa-code"></i> My Expertise</h3>
+                        <p class="description">I am a professional Staff Manager and Developer specializing in creating robust systems for large-scale Roblox communities. My approach focuses on efficiency, professional interfaces, and secure infrastructure.</p>
+                        <div class="skills-grid">
+                            <div class="skill-item"><i class="fa-brands fa-discord"></i><h4>Discord Bots</h4><p>Custom tailored bots for logging and ticket systems.</p></div>
+                            <div class="skill-item"><i class="fa-solid fa-users"></i><h4>Team Leadership</h4><p>Recruiting and managing massive staff teams.</p></div>
+                            <div class="skill-item"><i class="fa-solid fa-laptop-code"></i><h4>Web Panels</h4><p>Building secure management pipelines and dashboards.</p></div>
+                        </div>
+                        <br><br>
+                        <h3>Contact Info</h3>
+                        <div class="contact-grid mt-3">
+                            <div class="contact-card glass-panel discord-card">
+                                <div class="contact-icon discord"><i class="fa-brands fa-discord"></i></div>
+                                <div class="contact-info"><h3>Discord</h3><p class="contact-handle">Frospall</p><button class="btn btn-discord copy-btn" data-clipboard="Frospall"><i class="fa-regular fa-copy"></i> Copy Username</button></div>
+                            </div>
+                            <div class="contact-card glass-panel github-card">
+                                <div class="contact-icon github"><i class="fa-brands fa-github"></i></div>
+                                <div class="contact-info"><h3>GitHub</h3><p class="contact-handle">frospall</p><a href="https://github.com/frospall" target="_blank" class="btn btn-github"><i class="fa-solid fa-arrow-up-right-from-square"></i> Visit Profile</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <div id="action-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-box glass-panel fade-in">
+            <div class="modal-header">
+                <h3 id="modal-title">Action</h3>
+                <button class="close-modal" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label>Target Username</label>
+                    <input type="text" id="modal-target" placeholder="Enter player username">
+                </div>
+                <div class="input-group">
+                    <label>Reason / Meta details</label>
+                    <input type="text" id="modal-reason" placeholder="e.g. Exploiting, Toxicity">
+                </div>
+                <div class="input-group" id="duration-group">
+                    <label id="lbl-meta">Duration (Hours)</label>
+                    <input type="text" id="modal-meta" value="24">
+                </div>
+                <button class="btn btn-primary w-100 mt-3" id="modal-execute">Submit Action <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </div>
+    </div>
+    <div id="profile-modal" class="modal-overlay" style="display: none; z-index: 1000;">
+        <div class="modal-box glass-panel fade-in" style="width: 600px;">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-id-card"></i> Player Dossier</h3>
+                <button class="close-modal" onclick="document.getElementById('profile-modal').style.display='none'"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="flex-row" style="gap: 1rem; margin-bottom: 2rem;">
+                    <div style="width: 80px; height: 80px; background: #222; border-radius: 8px; border: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #555;">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div>
+                        <h2 id="lookup-name" style="font-size: 1.8rem;">PlayerName</h2>
+                        <p class="text-muted">ID: <span id="lookup-id">129481924</span></p>
+                        <p style="color: var(--warning); font-size: 0.85rem; margin-top: 0.25rem;"><i class="fa-solid fa-triangle-exclamation"></i> 2 Prior Warnings</p>
+                    </div>
+                </div>
+                <div class="dashboard-grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+                        <h4 style="margin-bottom: 0.5rem; color: var(--text-secondary); font-size: 0.85rem;">ECONOMY BALANCE</h4>
+                        <p style="font-size: 1.25rem; font-weight: 600; color: var(--accent-gold);"><i class="fa-solid fa-coins"></i> 4,520</p>
+                    </div>
+                    <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+                        <h4 style="margin-bottom: 0.5rem; color: var(--text-secondary); font-size: 0.85rem;">CURRENT STATUS</h4>
+                        <p style="font-size: 1.25rem; font-weight: 600; color: var(--success);">In Game (Server #4)</p>
+                    </div>
+                </div>
+                <button class="btn btn-outline w-100 mt-3" onclick="document.getElementById('profile-modal').style.display='none'">Close Dossier</button>
+            </div>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
